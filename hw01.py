@@ -65,7 +65,7 @@ print("Дискриминант =", d)
 if d < 0:
     print("Корней нет")
 elif d == 0:
-    x1 = (-b + math.sqrt(d)) / (2 * a)
+    x1 = -b / (2 * a)
     print("x1 = ", x1)
 else:
     x1 = (-b + math.sqrt(d)) / (2 * a)
