@@ -1,21 +1,23 @@
-# https://www.berdov.com/docs/equation/quadratic_equations/
-import math
 import sys
-a = int(input("Введите первый коэффициент а:"))
-b = int(input("Введите второй коэффициент b:"))
-c = int(input("Введите свободный член c:"))
-if a == 0:
-    sys.exit("a не должно равняться нулю")
-
-# вычисляем дискриминант по формуле D = b^2 − 4ac
-d = (b ** 2) - (4 * a * c)
-print("Дискриминант =", d)
-if d < 0:
-    print("Корней нет")
-elif d == 0:
-    x1 = (-b + math.sqrt(d)) / (2 * a)
-    print("x1 = ", x1)
+name = "Konstantin"
+age = int(input("Введите возраст:"))
+age2 = age - 18
+print("Значение:", age2)
+if age2 > 0:
+    text2 = "старше"
+elif age2 == 0:
+    print("Константину 18 лет")
+    sys.exit()
 else:
-    x1 = (-b + math.sqrt(d)) / (2 * a)
-    x2 = (-b - math.sqrt(d)) / (2 * a)
-    print("x1 = ", x1, "x2 = ", x2)
+    text2 = "младше"
+age2 = abs(age2)
+if age2 >= 5 and age2 <= 20:
+    text = "лет"
+else:
+    if (age2 % 10) == 1:
+        text = "год"
+    elif (age2 % 10) >= 2 and (age2 % 10) <= 4:
+        text = "года"
+    else:
+        text = "лет"
+print("Константин на", abs(age2), text, text2, "18")
