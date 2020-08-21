@@ -1,23 +1,23 @@
-import sys
-name = "Konstantin"
-age = int(input("Введите возраст:"))
-age2 = age - 18
-print("Значение:", age2)
-if age2 > 0:
-    text2 = "старше"
-elif age2 == 0:
-    print("Константину 18 лет")
-    sys.exit()
-else:
-    text2 = "младше"
-age2 = abs(age2)
-if age2 >= 5 and age2 <= 20:
-    text = "лет"
-else:
-    if (age2 % 10) == 1:
-        text = "год"
-    elif (age2 % 10) >= 2 and (age2 % 10) <= 4:
-        text = "года"
+# Дан список, заполненный произвольными целыми числами, получите новый список,
+# элементами которого будут квадратные корни элементов исходного списка,
+# но только если результаты извлечения корня не имеют десятичной части и
+# если такой корень вообще можно извлечь
+# Пример: Дано: [2, -5, 8, 9, -25, 25, 4]   Результат: [3, 5, 2]
+
+import random
+import math
+
+lst = []
+lst_new = []
+while len(lst) <= 6:
+    lst.append(random.randint(1, 25))
+print("Произвольный список:", lst)
+i = 0
+while i <= 6:
+    print("Корень из", lst[i], "равен:", math.sqrt(lst[i]), type(math.sqrt(lst[i])))
+    if math.sqrt(lst[i]) > 0 and math.sqrt(lst[i]).is_integer == True:
+        lst_new.append(math.sqrt(lst[i]))
     else:
-        text = "лет"
-print("Константин на", abs(age2), text, text2, "18")
+        print("Элемент", lst[i], "не отвечает условию")
+    i += 1
+print("Новый список", lst_new)
