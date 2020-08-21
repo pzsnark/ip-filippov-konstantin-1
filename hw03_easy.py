@@ -41,11 +41,9 @@ lst_new = []
 while len(lst) <= 4:
     lst.append(random.randint(1, 10))
 print("Произвольный список:", lst)
-i = 0
-while i <= 4:
-    if lst[i] % 2 == 0:
-        lst_new.append(lst[i] / 4)
+while len(lst_new) <= 4:
+    if lst[len(lst_new)] % 2 == 0:
+        lst_new.append(lst[len(lst_new)] / 4)
     else:
-        lst_new.append(lst[i] * 2)
-    i += 1
+        lst_new.append(lst[len(lst_new)] * 2)
 print("Новый список", lst_new)
