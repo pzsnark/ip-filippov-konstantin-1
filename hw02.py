@@ -43,16 +43,34 @@ else:
 # Подсказки:
 # * постарайтесь решить задачу с применением арифметики и цикла while;
 # * при желании и понимании решите задачу с применением цикла for.
+
+# вариант 1
+# import random
+#
+# n = random.randint(0, 999999)
+# print("Случайноe число:", n)
+# list = []
+# while n > 0:
+#     list.append(n % 10)
+#     n = n // 10
+# m = 0
+# for i in list:
+#     if i >= m:
+#         m = i
+# print("Самая большая цифра в числе:", m)
+
+# вариант 2
 import random
 
 n = random.randint(0, 999999)
 print("Случайноe число:", n)
 list = []
-while n > 0:
-    list.append(n % 10)
-    n = n // 10
 m = 0
-for i in list:
-    if i >= m:
-        m = i
+i = 0
+while n > 0:
+    m = n % 10
+    list.append(m)
+    if m >= i:
+        i = m
+    n = n // 10
 print("Самая большая цифра в числе:", m)
