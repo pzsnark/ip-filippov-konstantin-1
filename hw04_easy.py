@@ -34,7 +34,10 @@ print(my_round(2.9999967, 5))
 from sys import exit
 def lucky_ticket(ticket_number):
     lst = [int(n) for n in str(ticket_number)]
-    return print("Ошибка в номере") if len(lst) != 6 else bool(sum(lst[:3]) == sum(lst[:-3]))
+    if len(lst) != 6:
+        return "Ошибка в номере"
+    else:
+        return bool(sum(lst[:3]) == sum(lst[:-3]))
 
 print(lucky_ticket(123006))
 print(lucky_ticket(12321))
