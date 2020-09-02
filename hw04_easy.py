@@ -31,7 +31,6 @@ print(my_round(2.9999967, 5))
 # !!!P.S.: функция не должна НИЧЕГО print'ить, должна возвращать либо True,
 # ибо False (если счастливый и несчастливый соответственно)
 
-from sys import exit
 def lucky_ticket(ticket_number):
     lst = [int(n) for n in str(ticket_number)]
     if len(lst) != 6:
