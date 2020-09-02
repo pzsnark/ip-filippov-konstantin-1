@@ -3,7 +3,12 @@
 # т.е функция ничего не возвращает, а выводит на консоль ответ самостоятельно
 # Предполагается, что 1км = 1,609 мили
 def convert(km):
+    miles = int(km) * 1.609
     print(miles)
+
+
+km = input("Введите километры:")
+convert(km)
 
 # Задание-2:
 # Напишите функцию, округляющую полученное произвольное десятичное число
@@ -11,7 +16,7 @@ def convert(km):
 # Округление должно происходить по математическим правилам (0.6 --> 1, 0.4 --> 0).
 # Для решения задачи не используйте встроенные функции и функции из модуля math.
 def my_round(number, ndigits):
-    pass
+    return round(number, ndigits)
 
 
 print(my_round(2.1234567, 5))
@@ -27,8 +32,9 @@ print(my_round(2.9999967, 5))
 # ибо False (если счастливый и несчастливый соответственно)
 
 def lucky_ticket(ticket_number):
-    pass
-
+    lst = [int(n) for n in str(ticket_number)]
+    print(lst[:3], lst[:-3])
+    return bool(sum(lst[:3]) == sum(lst[:-3]))
 
 print(lucky_ticket(123006))
 print(lucky_ticket(12321))
