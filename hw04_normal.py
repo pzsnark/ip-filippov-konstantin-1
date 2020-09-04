@@ -1,6 +1,8 @@
 # Задание-1:
 # Напишите функцию, возвращающую ряд Фибоначчи с n-элемента до m-элемента.
 # Первыми элементами ряда считать цифры 1 1
+# https://habr.com/ru/post/261159/
+# http://py-algorithm.blogspot.com/2011/04/blog-post_04.html
 
 def fibonacci(n, m):
     pass
