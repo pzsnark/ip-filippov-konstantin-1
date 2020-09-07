@@ -16,7 +16,7 @@ convert(km)
 # Округление должно происходить по математическим правилам (0.6 --> 1, 0.4 --> 0).
 # Для решения задачи не используйте встроенные функции и функции из модуля math.
 def my_round(number, ndigits):
-    return round(number, ndigits)
+    return float(int((number * (10 ** ndigits)) + (0.5 if number > 0 else -0.5))) / (10 ** ndigits)
 
 
 print(my_round(2.1234567, 5))
