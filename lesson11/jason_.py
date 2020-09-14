@@ -2,7 +2,7 @@ import json
 import time
 from threading import Thread, Lock, RLock
 
-lock = Lock()
+lock = RLock()
 
 people_from_first_db = [
     {
@@ -73,10 +73,20 @@ def get_both_parts():
 
 
 if __name__ == "__main__":
-    t1 = Thread(target=write_json(), daemon=True)
-    t2 = Thread(target=get_both_parts(), daemon=True)
-    t3 = Thread(target=get_both_parts(), daemon=True)
+    t1 = Thread(target=write_json, daemon=True)
+    t2 = Thread(target=get_both_parts, daemon=True)
+    t3 = Thread(target=get_both_parts, daemon=True)
     t2.start()
     t3.start()
     time.sleep(5)
     print(people_output)
+
+# from threading import Semaphore
+#s = Semaphore(5)
+# если не передавать в Semaphore параметр,
+# семафор будет инициализирован 1
+# (и таким образом станет обычной блокировкой)
+# s.acquire # уменьшает счетчик на 1
+# ...доступ к общему ресурсу
+# s.release() увеличивает счетчик на 1
+
