@@ -1,32 +1,30 @@
-# Задание-2: Дата задана в виде строки формата 'dd.mm.yyyy'.
-# Проверить, корректно ли введена дата.
-# Условия корректности:
-# 1. День должен приводиться к целому числу в диапазоне от 1 до 30(31)
-#  (в зависимости от месяца, февраль не учитываем)
-# 2. Месяц должен приводиться к целому числу в диапазоне от 1 до 12
-# 3. Год должен приводиться к целому положительному числу в диапазоне от 1 до 9999
-# 4. Длина исходной строки для частей должна быть в соответствии с форматом
-#  (т.е. 2 символа для дня, 2 - для месяца, 4 - для года)
-
-# Пример корректной даты
-date = '31.11.1985'
-
-# Примеры некорректных дат
-# date = '01.22.1001'
-# date = '1.12.1001'
-# date = '-2.10.3001'
+# Задание-3:
+# Напишите скрипт, заполняющий указанный файл (самостоятельно задайте имя файла)
+# произвольными целыми цифрами, в результате в файле должно быть
+# 2500-значное произвольное число.
+# Найдите и выведите самую длинную последовательность одинаковых цифр
+# в вышезаполненном файле.
+import random
 
 
-import re
+def seq(a):
+    result = str()
+    max_result = 0
+    last = a[0]
+    for i in a:
+        if i == last:
+            result += str(i)
+        else:
+            if len(result) > len(max_result):
+                max_result = result
+            last = i
+            result = ""
+    if result > max_result:
+        max_result = result
+    return max_result
 
 
-day = date[0:2]
-month = date[3:5]
-year = date[6:11]
-print(f"{day}.{month}.{year}")
-day_pattern = "[0-3][0-9]"
-month_pattern = "[0-1][0-9]"
-year_pattern = "[0-9]{4}"
-print(re.match(day_pattern, day) is None)
-print(re.match(month_pattern, month) is None)
-print(re.match(day_pattern, year) is None)
+with open('2500.txt', 'r+', encoding='UTF-8') as file:
+    for _ in range(2500):
+        file.write(str(random.randint(0, 9)))
+    print(seq(file.read()))
