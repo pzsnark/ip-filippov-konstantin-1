@@ -70,3 +70,16 @@ print(result)
 # 2500-значное произвольное число.
 # Найдите и выведите самую длинную последовательность одинаковых цифр
 # в вышезаполненном файле.
+import random
+from itertools import groupby
+import re
+
+with open('2500.txt', 'r+', encoding='UTF-8') as file:
+    for _ in range(2500):
+        file.write(str(random.randint(0, 9)))
+    file.seek(0)
+    found = re.findall(r'\d', file.read())
+    file.seek(0)
+    d = max((list(found) for l, found in groupby(file.read())), key=len)
+print(d)
+
