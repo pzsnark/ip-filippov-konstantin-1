@@ -1,30 +1,29 @@
-# Задание-3:
-# Напишите скрипт, заполняющий указанный файл (самостоятельно задайте имя файла)
-# произвольными целыми цифрами, в результате в файле должно быть
-# 2500-значное произвольное число.
-# Найдите и выведите самую длинную последовательность одинаковых цифр
-# в вышезаполненном файле.
-import random
+# Задача-1:
+# Следующая программа написана верно, однако содержит места потенциальных ошибок.
+# используя конструкцию try добавьте в код обработку соответствующих исключений.
+# Пример.
+
+#
+
+# Исходная программа:
+def avg(a, b):
+    """Вернуть среднее геометрическое чисел 'a' и 'b'.
+
+    Параметры:
+        - a, b (int или float).
+
+    Результат:
+        - float.
+    """
+    return (a * b) ** 0.5
 
 
-def seq(a):
-    result = str()
-    max_result = 0
-    last = a[0]
-    for i in a:
-        if i == last:
-            result += str(i)
-        else:
-            if len(result) > len(max_result):
-                max_result = result
-            last = i
-            result = ""
-    if result > max_result:
-        max_result = result
-    return max_result
-
-
-with open('2500.txt', 'r+', encoding='UTF-8') as file:
-    for _ in range(2500):
-        file.write(str(random.randint(0, 9)))
-    print(seq(file.read()))
+try:
+    a = float(input("a = "))
+    b = float(input("b = "))
+    c = avg(a, b)
+    print("Среднее геометрическое = {:.2f}".format(c))
+except ValueError("Ошипко!"):
+    print(a, b)
+except Exception as err:
+    print("Ошибка:", err)

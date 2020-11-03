@@ -1,16 +1,32 @@
-a = "45673456877734967894055679340679340576945876"
-result = str(a[0])
-max_result = ""
-last = str(a[0])
-for i in a[1:]:
-    if i == last:
-        result += str(i)
-        print(i, result)
+"""
+Ошибки (номера строк через пробел): 15 18 19
+"""
+
+
+def avg(a, b):
+    """Вернуть среднее геометрическое чисел 'a' и 'b'.
+
+    Параметры:
+        - a, b (int или float).
+
+    Результат:
+        - float.
+
+    Исключения:
+        - ValueError: вычисление не возможно.
+    """
+    if a * b >= 0:
+        return (a * b) ** 0.5
     else:
-        if len(result) > len(max_result):
-            max_result = result
-            last = i
-            result = ""
-    if len(result) > len(max_result):
-        max_result = result
-print(max_result)
+        raise ValueError("Одно или оба числа не являются положительным/и.")
+
+
+try:
+    a = float(input("a = "))
+    b = float(input("b = "))
+    c = avg(a, b)
+    print("Среднее геометрическое = {:.2f}".format(c))
+except ValueError as err:
+    print("Ошибка:", err, "Проверьте введенные числа.")
+except Exception as err:
+    print("Ошибка:", err)
