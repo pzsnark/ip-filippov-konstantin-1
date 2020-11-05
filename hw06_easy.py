@@ -26,8 +26,29 @@ print("Среднее геометрическое = {:.2f}".format(c))
 # из которой запущен данный скрипт.
 # И второй скрипт, удаляющий эти папки.
 
+import os
+
+for i in range(1, 10):
+    os.mkdir("dir_" + str(i))
+
+for i in range(1, 10):
+    os.removedirs("dir_" + str(i))
+
 # Задача-3:
 # Напишите скрипт, отображающий папки текущей директории.
 
+import os
+
+for i in next(os.walk("."))[1]:
+    print(i)
+
 # Задача-4:
 # Напишите скрипт, создающий копию файла, из которого запущен данный скрипт.
+
+import os
+import shutil
+import sys
+
+path = sys.argv[0]
+path2 = path[:-3]
+shutil.copy(path, path2 + "_copy.py")
