@@ -22,7 +22,7 @@ line = 'mtMmEZUOmcqWiryMQhhTxqKdSTKCYEJlEZCsGAMkgAYEOmHBSQsSUHKvSfbmxULaysmNO' \
        'zTYwZAiRwycdlHfyHNGmkNqSwXUrxGc'
 
 # вариант с re
-print(re.findall(r'[a-z]+', line))
+print(re.findall(r'[a-z]+(?=[A-Z])|(?<=[A-Z])[a-z]+', line))
 # вариант без re
 for i in range(len(line)):
     if line[i].islower():
