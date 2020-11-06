@@ -11,14 +11,28 @@ def avg(a, b):
 
     Результат:
         - float.
+
+    Исключения:
+        - ValueError: вычисление не возможно.
     """
-    return (a * b) ** 0.5
+    if a * b >= 0:
+        return (a * b) ** 0.5
+    else:
+# проверка значений (должны быть положительными по определению)
+        raise ValueError("Одно или оба числа не являются положительными.")
 
 
-a = float(input("a = "))
-b = float(input("b = "))
-c = avg(a, b)
-print("Среднее геометрическое = {:.2f}".format(c))
+try:
+    a = float(input("a = "))
+    b = float(input("b = "))
+    c = avg(a, b)
+    print("Среднее геометрическое = {:.2f}".format(c))
+# проверка типа данных
+except ValueError as err:
+    print("Ошибка:", err, "Проверьте введенные числа.")
+# остальные ошибки
+except Exception as err:
+    print("Ошибка:", err)
 
 # Задача-2:
 # Напишите скрипт, создающий директории dir_1 - dir_9 в папке,
