@@ -13,3 +13,58 @@
 # Для решения данной задачи используйте алгоритмы из задания easy,
 # оформленные в виде соответствующих функций,
 # и импортированные в данный файл из easy.py
+
+import os
+
+
+def dir():
+    path = input("Введите путь \n")
+    return os.chdir(path)
+
+
+# создать папку
+def mkdir():
+    path = input("Введите путь \n")
+    return os.mkdir(path)
+
+
+# удалить папку
+def rmdir():
+    path = input("Введите путь \n")
+    return os.removedirs(path)
+
+
+# отображает папки текущей директории.
+def listdir():
+    for i in next(os.walk("."))[1]:
+        print(i)
+
+
+def menu():
+    print("Выберите опцию:")
+    print("1. Перейти в папку")
+    print("2. Просмотреть содержимое текущей папки")
+    print("3. Удалить папку")
+    print("4. Создать папку")
+    print("5. Выход")
+
+
+menu()
+while True:
+    x = int(input())
+    if x == 1:
+        dir()
+        menu()
+    elif x == 2:
+        listdir()
+        menu()
+    elif x == 3:
+        rmdir()
+        menu()
+    elif x == 4:
+        mkdir()
+        menu()
+    elif x == 5:
+        break
+    else:
+        print("Неверный ввод")
