@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    {% if popular_posts %}
+      <ul>
+        {% for post in popular_posts %}
+          <li>
+              <a href="{% url 'core:post-detail' post.id %}"></a>
+              <p> {{ post.author }} </p>
+              <p> {{ post.date_pub }} </p>
+              <p> <img alt="post's image" src="{{ post.image.url }}" style="width: 250px; height: 250px;"></p>
+              <p> {{ post.description }} </p>
+        {% endfor %}
+      </ul>
+    {% else %}
+    <p>Нет ни одной публикации</p>
+    {% endif %}
+</body>
+</html>
