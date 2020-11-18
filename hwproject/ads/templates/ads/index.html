@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Главная страница HW Project</title>
+</head>
+<body>
+    {% if last_ad_7 %}
+      <ul>
+        {% for ad in last_ad_7 %}
+          <li>
+              <a href="{% url 'ads:post-detail' post.id %}"></a>
+              <p> {{ post.author }} </p>
+              <p> {{ post.date_pub }} </p>
+              <p> <img alt="post's image" src="{{ post.image.url }}" style="width: 250px; height: 250px;"></p>
+              <p> {{ post.description }} </p>
+        {% endfor %}
+      </ul>
+    {% else %}
+    <p>Нет ни одной публикации</p>
+    {% endif %}
+</body>
+</html>
