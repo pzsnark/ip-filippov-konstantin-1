@@ -21,7 +21,7 @@ class Post(models.Model):
     description = models.TextField(max_length=1000, blank=True)
     image = models.ImageField(upload_to='users/posts/images', null=False, blank=False)  # null blank дефолтные
     date_pub = models.DateTimeField(default=timezone.now)
-    data_edit = models.DateTimeField()
+    data_edit = models.DateTimeField(default=timezone.now)
     likes = models.ManyToManyField(User, related_name='users_likes_it', blank=True)
 
     @property
