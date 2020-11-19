@@ -2,17 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Главная страница HW Project</title>
+    <title>Полный список публикаций</title>
 </head>
 <body>
-    {% if last_ad %}
+    {% if full_list %}
       <ul>
-        {% for ad in last_ad %}
+        {% for ad in full_list %}
           <li>
               <p> {{ ad.author }} </p>
+              <p> {% for category in ad.category_set.all %}
+                    Категория: {{ category.name }}
+                  {% endfor %}
+              </p>
               <a href="{% url 'ads:ad-detail' ad.id %}">
                 <p> {{ ad.date_pub }} </p>
-                <p> <img alt="ad's image" src="{{ ad.photo.url }}" style="width: 319px; height: 500px;"></p>
+                <p> <img alt="ad's image" src="{{ ad.photo.url }}" style="width: 5%; height: 5%;"></p>
               </a>
                 <p> {{ ad.description }} </p>
         {% endfor %}

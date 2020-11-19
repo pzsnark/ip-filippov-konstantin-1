@@ -4,13 +4,17 @@
     <meta charset="UTF-8">
     <title>Главная страница HW Project</title>
 </head>
-<body>
+<body style="width:800px;">
+  <div align="left">
     {% if last_ad %}
       <ul>
         {% for ad in last_ad %}
           <li>
               <p> {{ ad.author }} </p>
-              <p> {{ ad.categories.all }}</p>
+              <p> {% for category in ad.category_set.all %}
+                    Категория: {{ category.name }}
+                  {% endfor %}
+              </p>
               <a href="{% url 'ads:ad-detail' ad.id %}">
                 <p> {{ ad.date_pub }} </p>
                 <p> <img alt="ad's image" src="{{ ad.photo.url }}" style="width: 10%; height: 10%;"></p>
@@ -21,5 +25,6 @@
     {% else %}
     <p>Нет ни одной публикации</p>
     {% endif %}
+  </div>
 </body>
 </html>
