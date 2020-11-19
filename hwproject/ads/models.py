@@ -29,4 +29,7 @@ class Ad(models.Model):
 class Category(models.Model):
     name = models.CharField(max_length=50)
     slug = models.SlugField()
-    categories = models.ManyToManyField(Ad)
+    categories = models.ManyToManyField(Ad, blank=True)
+
+    def __str__(self):
+        return '{0}: {1} '.format(self.id, self.name)

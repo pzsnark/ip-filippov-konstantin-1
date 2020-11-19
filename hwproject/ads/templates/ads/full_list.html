@@ -10,10 +10,9 @@
         {% for ad in last_ad %}
           <li>
               <p> {{ ad.author }} </p>
-              <p> {{ ad.categories.all }}</p>
               <a href="{% url 'ads:ad-detail' ad.id %}">
                 <p> {{ ad.date_pub }} </p>
-                <p> <img alt="ad's image" src="{{ ad.photo.url }}" style="width: 10%; height: 10%;"></p>
+                <p> <img alt="ad's image" src="{{ ad.photo.url }}" style="width: 319px; height: 500px;"></p>
               </a>
                 <p> {{ ad.description }} </p>
         {% endfor %}
