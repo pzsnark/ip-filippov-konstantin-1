@@ -1,30 +1,32 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Главная страница HW Project</title>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body style="width:800px;">
-  <div align="left">
-    {% if last_ad %}
-      <ul>
-        {% for ad in last_ad %}
-          <li>
-              <p> {{ ad.author }} </p>
-              <p> {% for category in ad.category_set.all %}
-                    Категория: {{ category.name }}
-                  {% endfor %}
-              </p>
-              <a href="{% url 'ads:ad-detail' ad.id %}">
-                <p> {{ ad.date_pub }} </p>
-                <p> <img alt="ad's image" src="{{ ad.photo.url }}" style="width: 10%; height: 10%;"></p>
-              </a>
-                <p> {{ ad.description }} </p>
+<div align="center"><a href="{% url 'ads:full_list' %}">Полный список публикаций</a></div>
+{% if last_ad %}
+<ul>
+    {% for ad in last_ad %}
+    <li>
+        <p> Автор: {{ ad.author }} </p>
+        <p> {% for category in ad.category_set.all %}
+            Категория: {{ category.name }}
+            {% endfor %}
+        </p>
+        <a href="{% url 'ads:ad_detail' ad.id %}">
+            <p> {{ ad.date_pub }} </p>
+            <p> <img alt="ad's image" src="{{ ad.photo.url }}" style="width: 10%; height: 10%;"></p>
+        </a>
+        <p> {{ ad.description }} </p>
+        <hr>
         {% endfor %}
-      </ul>
-    {% else %}
-    <p>Нет ни одной публикации</p>
-    {% endif %}
-  </div>
+</ul>
+{% else %}
+<p>Нет ни одной публикации</p>
+{% endif %}
 </body>
-</html>

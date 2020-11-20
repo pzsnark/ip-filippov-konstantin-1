@@ -25,6 +25,10 @@ class Ad(models.Model):
     def __str__(self):
         return 'Объявление #{0}, автор - {1} '.format(self.id, self.author.username)
 
+    @property
+    def short_text(self):
+        return self.description[:25]
+
 
 class Category(models.Model):
     name = models.CharField(max_length=50)

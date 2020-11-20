@@ -2,29 +2,26 @@
 <!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
-    <title>Главная страница HW Project</title>
+    <title>Детализация объявления</title>
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body style="width:800px;">
 <div align="center"><a href="{% url 'ads:full_list' %}">Полный список публикаций</a></div>
-{% if full_list %}
+{% if ad_detail %}
 <ul>
-    {% for ad in full_list %}
     <li>
-        <p> {{ ad.author }} </p>
-        <p> {% for category in ad.category_set.all %}
+        <p> {{ ad_detail.author }} </p>
+        <p> {% for category in ad_detail.category_set.all %}
             Категория: {{ category.name }}
             {% endfor %}
         </p>
-        <a href="{% url 'ads:ad_detail' ad.id %}">
             <p> {{ ad.date_pub }} </p>
-            <p> <img alt="ad's image" src="{{ ad.photo.url }}" style="width: 10%; height: 10%;"></p>
-        </a>
-        <p> {{ ad.short_text }} </p>
+            <p> <img alt="ad's image" src="{{ ad_detail.photo.url }}" style="width: 319px; height: 500px;"></p>
+        <p> {{ ad_detail.description }} </p>
         <hr>
-        {% endfor %}
+    </li>
 </ul>
 {% else %}
 <p>Нет ни одной публикации</p>

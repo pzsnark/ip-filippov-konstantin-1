@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from .models import Ad, Category
-from django.views.generic import ListView, View
+from django.views.generic import ListView, View, DetailView
 from django.template import loader
 
 # Create your views here.
@@ -28,21 +28,22 @@ class FullListView(ListView):
         return full_list
 
 
-# def index(request):
-#     last_ad_7 = Ad.objects.all().order_by('-date_pub')
-#     template = loader.get_template('ads/index.html')
+# def ad_detail(request, ad_id):
+#     detail = get_object_or_404(Ad, id=ad_id)
+#     template = loader.get_template('ads/ad_detail.html')
 #     context = {
-#         'last_ad_7': last_ad_7,
+#         'detail': detail
 #     }
-#     return HttpResponse(template.render(context))
+#     return HttpResponse(template.render(context, request))
 
 
-def ad_detail(request, ad_id):
-    post = get_object_or_404(Ad, id=ad_id)
-    # try:
-    #     post = Post.objects.get(id=post_id)
-    # except Post.DoesNotExist as e:
-    #     raise Http404('Post with id#{} does not exist'.format(post_id))
-    # post = Post.objects.get(id=post_id)
-    response = 'Детальное представление поста №{}, описание {}'.format(post.id, post.description)
-    return HttpResponse(response)
+class AdDetail(DetailView):
+    model = Ad
+    template_name = 'ads/ad_detail.html'
+    context_object_name = 'ad_detail'
+    pk_url_kwarg = 'ad_id'
+
+
+
+
+
