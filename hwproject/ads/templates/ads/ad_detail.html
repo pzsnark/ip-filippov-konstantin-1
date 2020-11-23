@@ -20,6 +20,10 @@
             <p> {{ ad.date_pub }} </p>
             <p> <img alt="ad's image" src="{{ ad_detail.photo.url }}" style="width: 319px; height: 500px;"></p>
         <p> {{ ad_detail.description }} </p>
+        <form method="POST" action="{% url 'ads:ad_favor' ad.id %}">
+            {% csrf_token %}
+            <button type="submit">в избранное</button>
+        </form>
         <hr>
     </li>
 </ul>

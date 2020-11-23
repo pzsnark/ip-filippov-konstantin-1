@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from .models import Ad, Category
 from django.views.generic import ListView, View, DetailView
@@ -42,6 +42,16 @@ class AdDetail(DetailView):
     template_name = 'ads/ad_detail.html'
     context_object_name = 'ad_detail'
     pk_url_kwarg = 'ad_id'
+
+
+def ad_favor(request, ad_id):
+    ad = get_object_or_404(Ad, id=ad_id)
+    if request.user in ad.favorite.all():
+        ad.favorite.remove(request.user)
+    else:
+        ad.favorite.add(request.user)
+        ad.save()
+    return redirect(request.META.get('HTTP_REFERER'), request)  # возвращаем пользователя назад
 
 
 
