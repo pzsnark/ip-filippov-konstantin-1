@@ -43,7 +43,14 @@ class AdDetail(DetailView):
     context_object_name = 'ad_detail'
     pk_url_kwarg = 'ad_id'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        ad = self.get_object()
+        context.update({'button_fav': "добавить в избранное" if self.request.user in ad.favorite.all() else "в избранном"})
+        return context
 
+
+# сделать проверку на метод POST
 def ad_favor(request, ad_id):
     ad = get_object_or_404(Ad, id=ad_id)
     if request.user in ad.favorite.all():
@@ -52,6 +59,7 @@ def ad_favor(request, ad_id):
         ad.favorite.add(request.user)
         ad.save()
     return redirect(request.META.get('HTTP_REFERER'), request)  # возвращаем пользователя назад
+
 
 
 

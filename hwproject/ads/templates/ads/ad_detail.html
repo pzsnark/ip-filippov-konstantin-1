@@ -17,12 +17,12 @@
             Категория: {{ category.name }}
             {% endfor %}
         </p>
-            <p> {{ ad.date_pub }} </p>
+            <p> {{ ad_detail.date_pub }} </p>
             <p> <img alt="ad's image" src="{{ ad_detail.photo.url }}" style="width: 319px; height: 500px;"></p>
         <p> {{ ad_detail.description }} </p>
-        <form method="POST" action="{% url 'ads:ad_favor' ad.id %}">
+        <form method="POST" action="{% url 'ads:ad_favor' ad_id=ad_detail.id %}">
             {% csrf_token %}
-            <button type="submit">в избранное</button>
+            <button type="submit">{{ button_fav }}</button>
         </form>
         <hr>
     </li>

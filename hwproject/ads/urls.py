@@ -8,5 +8,5 @@ urlpatterns = [
     path('', IndexView.as_view(), name='index'),
     url(r'(?P<ad_id>[0-9]+)/$', AdDetail.as_view(), name='ad_detail'),
     path('full_list/', FullListView.as_view(), name='full_list'),
-    path('/<int:ad_id>/favor/', ad_favor, name='ad_favor'),
+    path('<int:ad_id>/favor/', ad_favor, name='ad_favor'),
 ]
