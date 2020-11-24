@@ -3,6 +3,10 @@ from django.http import HttpResponse
 from .models import Ad, Category
 from django.views.generic import ListView, View, DetailView
 from django.template import loader
+from .forms import ADForm
+from django.utils import timezone
+from django.contrib.auth import login, logout
+
 
 # Create your views here.
 
@@ -46,22 +50,54 @@ class AdDetail(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         ad = self.get_object()
-        context.update({'button_fav': "добавить в избранное" if self.request.user in ad.favorite.all() else "в избранном"})
+        context.update({'button_fav': "в избранном" if self.request.user in ad.favorite.all() else "добавить в избранное"})
+        context.update({'button_rm': "удалить" if self.request.user == ad.author else "удаление невозможно"})
         return context
 
 
-# сделать проверку на метод POST
 def ad_favor(request, ad_id):
     ad = get_object_or_404(Ad, id=ad_id)
-    if request.user in ad.favorite.all():
-        ad.favorite.remove(request.user)
+    if request.method == 'POST':
+        if request.user in ad.favorite.all():
+            ad.favorite.remove(request.user)
+        else:
+            ad.favorite.add(request.user)
+            ad.save()
+        return redirect(request.META.get('HTTP_REFERER'), request)  # возвращаем пользователя назад
     else:
-        ad.favorite.add(request.user)
-        ad.save()
-    return redirect(request.META.get('HTTP_REFERER'), request)  # возвращаем пользователя назад
+        return redirect('ads:ad_detail', ad_id=ad.id)
 
 
+def ad_create(request):
+    template_name = 'ads/ad_create.html'
+    context = {'form': ADForm()}
+    if request.method == 'GET':
+        return render(request, template_name, context)
+    elif request.method == 'POST':
+        form = ADForm(request.POST, request.FILES)
+        if form.is_valid():
+            ad = form.save(commit=False)
+            ad.date_pub = timezone.now()
+            ad.author = request.user
+            ad.save()
+            context['ad_create_result'] = 'Объявление создано'
+            return redirect('ads:ad_detail', ad_id=ad.id)
+        else:
+            context['ad_create_result'] = 'Объявление не создано'
+            context['form'] = form
+            return render(request, template_name, context)
 
 
-
+def ad_remove(request, ad_id):
+    ad = get_object_or_404(Ad, id=ad_id)
+    context = {'ad_remove_result': 'Невозможно удалить'}
+    if request.method == 'POST':
+        if request.user.is_staff == 1:
+            Ad.objects.filter(id=ad_id).delete()
+            return HttpResponse('Объявление удалено')
+        elif request.user == ad.author:
+            Ad.objects.filter(id=ad_id).delete()
+            return HttpResponse('Объявление удалено')
+        else:
+            return render(request, 'ads/ad_detail.html', context)
 

@@ -18,11 +18,20 @@
             {% endfor %}
         </p>
             <p> {{ ad_detail.date_pub }} </p>
-            <p> <img alt="ad's image" src="{{ ad_detail.photo.url }}" style="width: 319px; height: 500px;"></p>
+            {% if ad.photo %}
+            <p> <img alt="ad's image" src="{{ ad.photo.url }}" style="width: 10%; height: 10%;"></p>
+            {% else %}
+            <p>Нет ни одной фотографии</p>
+            {% endif %}
         <p> {{ ad_detail.description }} </p>
         <form method="POST" action="{% url 'ads:ad_favor' ad_id=ad_detail.id %}">
             {% csrf_token %}
             <button type="submit">{{ button_fav }}</button>
+        </form>
+        <form method="POST" action="{% url 'ads:ad_remove' ad_id=ad_detail.id %}">
+            {% csrf_token %}
+        <button type="submit">{{ button_rm }}</button>
+            {{ context }}
         </form>
         <hr>
     </li>

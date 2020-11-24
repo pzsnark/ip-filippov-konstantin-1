@@ -9,6 +9,7 @@
 </head>
 <body style="width:800px;">
 <div align="center"><a href="{% url 'ads:full_list' %}">Полный список публикаций</a></div>
+<div align="center"><a href="{% url 'ads:ad_create' %}">Добавить объявление</a></div>
 {% if last_ad %}
 <ul>
     {% for ad in last_ad %}
@@ -20,7 +21,11 @@
         </p>
         <a href="{% url 'ads:ad_detail' ad.id %}">
             <p> {{ ad.date_pub }} </p>
+            {% if ad.photo %}
             <p> <img alt="ad's image" src="{{ ad.photo.url }}" style="width: 10%; height: 10%;"></p>
+            {% else %}
+            <p>Нет ни одной фотографии</p>
+            {% endif %}
         </a>
         <p> {{ ad.description }} </p>
         <hr>
