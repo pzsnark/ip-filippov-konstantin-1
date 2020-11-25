@@ -25,12 +25,12 @@
             {% endif %}
         <p> {{ ad_detail.description }} </p>
         <form method="POST" action="{% url 'ads:ad_favor' ad_id=ad_detail.id %}">
-            {% csrf_token %}
+            {% csrf_token %}пайчарму
             <button type="submit">{{ button_fav }}</button>
         </form>
         <form method="POST" action="{% url 'ads:ad_remove' ad_id=ad_detail.id %}">
             {% csrf_token %}
-        <button type="submit">{{ button_rm }}</button>
+        <button type="submit" {{ button_rm }}>удалить</button>
             {{ context }}
         </form>
         <hr>

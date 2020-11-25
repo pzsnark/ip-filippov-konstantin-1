@@ -51,7 +51,7 @@ class AdDetail(DetailView):
         context = super().get_context_data(**kwargs)
         ad = self.get_object()
         context.update({'button_fav': "в избранном" if self.request.user in ad.favorite.all() else "добавить в избранное"})
-        context.update({'button_rm': "удалить" if self.request.user == ad.author else "удаление невозможно"})
+        context.update({'button_rm': '' if self.request.user == ad.author else 'hidden'})
         return context
 
 

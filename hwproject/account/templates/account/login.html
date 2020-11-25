@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Login{% endblock %}
+{% block content %}
+    {% if request.user.not_authenticated %}
+        <form action="." method="post">
+            {{ form.as_p }}
+            {% csrf_token %}
+            <p><input type="submit" value="Login"></p>
+            {{ login_result }}
+        </form>
+    {% endif %}
+{% endblock %}
