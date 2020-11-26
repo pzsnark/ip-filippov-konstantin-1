@@ -1,14 +1,6 @@
-{% load static %}
-<!DOCTYPE html>
-<head>
-    <meta charset="UTF-8">
-    <title>Главная страница HW Project</title>
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-</head>
-<body style="width:800px;">
-<div align="center"><a href="{% url 'ads:full_list' %}">Полный список публикаций</a></div>
+{% extends "base.html" %}
+{% block title %}Detail{% endblock %}
+{% block content %}
 {% if full_list %}
 <ul>
     {% for ad in full_list %}
@@ -33,4 +25,4 @@
 {% else %}
 <p>Нет ни одной публикации</p>
 {% endif %}
-</body>
+{% endblock %}

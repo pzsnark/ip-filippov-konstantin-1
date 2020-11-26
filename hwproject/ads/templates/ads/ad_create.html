@@ -1,15 +1,6 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Создание объявления</title>
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-
-</head>
-<body>
+{% extends "base.html" %}
+{% block title %}Detail{% endblock %}
+{% block content %}
 <form method="post" enctype="multipart/form-data">
 {% csrf_token %}
     {# {{ form.as_table }} будет отображать их как ячейки таблицы, завернутые в <tr> теги #}
@@ -19,5 +10,4 @@
 <button type="submit">Создать пост</button>
     {{ ad_create_result }}
 </form>
-</body>
-</html>
+{% endblock %}

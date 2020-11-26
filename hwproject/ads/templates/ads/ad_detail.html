@@ -1,14 +1,6 @@
-{% load static %}
-<!DOCTYPE html>
-<head>
-    <meta charset="UTF-8">
-    <title>Детализация объявления</title>
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-</head>
-<body style="width:800px;">
-<div align="center"><a href="{% url 'ads:full_list' %}">Полный список публикаций</a></div>
+{% extends "base.html" %}
+{% block title %}Detail{% endblock %}
+{% block content %}
 {% if ad_detail %}
 <ul>
     <li>
@@ -25,7 +17,7 @@
             {% endif %}
         <p> {{ ad_detail.description }} </p>
         <form method="POST" action="{% url 'ads:ad_favor' ad_id=ad_detail.id %}">
-            {% csrf_token %}пайчарму
+            {% csrf_token %}
             <button type="submit">{{ button_fav }}</button>
         </form>
         <form method="POST" action="{% url 'ads:ad_remove' ad_id=ad_detail.id %}">
@@ -39,4 +31,4 @@
 {% else %}
 <p>Нет ни одной публикации</p>
 {% endif %}
-</body>
+{% endblock %}
