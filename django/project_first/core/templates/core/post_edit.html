@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Post edit</title>
+</head>
+<body>
+  <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Принять изменения</button>
+  </form>
+  <form action="{% url 'core:post-delete' post.id %}" method="GET">
+      {% csrf_token %}
+      <button type="submit">Удалить публикацию</button>
+  </form>
+</body>
+</html>
