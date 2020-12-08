@@ -1,11 +1,11 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, Http404
 from django.urls import reverse
-from .models import Post, Comment
+from .models import Post, Comment, Profile
 from django.views.generic import ListView, View, CreateView, DeleteView, DetailView, UpdateView
 from django.db.models import Sum
 from django.template import loader
-from .forms import PostForm, CommentForm
+from .forms import PostForm, CommentForm, UpdateProfileForm
 
 
 # Create your views here.
@@ -71,6 +71,14 @@ class EditPostView(UpdateView):
         return super().get(self, request, post_id, args, kwargs)
 
 
+class ProfileView(DeleteView):
+    model = Profile
+    template_name = 'core/profile.html'
+
+    def get_object(self):
+        return get_object_or_404(Profile, user__id=self.kwargs['user_id'])
+
+
 # def index(request):
 #     popular_posts = Post.objects.annotate(likes_count=Sum('likes')).order_by('-likes_count')
 #     template = loader.get_template('core/index.html')
@@ -128,6 +136,42 @@ class DeletePostView(DeleteView):
 #     friends = request.user.profile.friends.all()
 #     feed_posts = Post.objects.filter(author__in=friends)
 #     return HttpResponse(feed_posts)
+
+
+class AddRemoveFriend(View):
+
+    def post(self, request, user_id, *args, **kwargs):
+        profile = get_object_or_404(Profile, user__id=user_id)
+        # try:
+        # except User.DoesNotExist
+
+        if profile.friends.filter(id=request.user.id).exists():
+            friend = profile.friends.get(id=request.user.id)
+            profile.friends.remove(friend)
+            request.user.user_profile.friends.remove(profile.user)
+        else:
+            profile.friends.add(request.user.user_profile.user)
+            request.user.user_profile.friends.add(profile.user)
+
+        return redirect(request.META.get('HTTP_REFERER'), request)
+
+
+class EditProfileView(UpdateView):
+    model = Profile
+    form_class = UpdateProfileForm
+    template_name = 'core/edit_profile.html'
+    slug_field = 'user_id'
+    slug_url_kwarg = 'user_id'
+
+    def dispatch(self, request, *args, **kwargs):
+        obj = self.get_object()
+        if obj.user != self.request.user:
+            raise Http404("Это не ваш профиль")
+        return super(EditProfileView, self).dispatch(request, *args, **kwargs)
+
+    def get_success_url(self):  # возвращает путь для перенаправления
+        user_id = self.kwargs['user_id']
+        return reverse('user:profile', args=(user_id, ))
 
 
 def post_detail(request, post_id):

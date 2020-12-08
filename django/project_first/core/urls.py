@@ -1,7 +1,7 @@
 from django.conf.urls import url
 from django.urls import path, reverse_lazy
 from django.views.generic import TemplateView
-from .views import IndexView, FeedView, PostView, CretePostView, EditPostView, like_post, DeletePostView
+from .views import IndexView, FeedView, PostView, CretePostView, EditPostView, like_post, DeletePostView, ProfileView, AddRemoveFriend, EditProfileView
 from django.contrib.auth.views import (
     PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView, LogoutView
     )
@@ -32,4 +32,7 @@ urlpatterns = [
     path('password_reset/complete', PasswordResetCompleteView.as_view(), name='password-reset-complete'),
     path('login/', LoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),
+    path('<int:user_id>/profile/', ProfileView.as_view(), name='profile'),
+    path('<int:user_id>/profile/add_remove_friend/', AddRemoveFriend.as_view(), name='add-remove-friend'),
+    path('<int:user_id>/profile/edit/', EditProfileView.as_view(), name='edit-profile'),
 ]
