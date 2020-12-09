@@ -3,7 +3,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from .models import Ad, Category
 from django.views.generic import ListView, View, DetailView
-from django.template import loader
+from django.template import loader, RequestContext
 from .forms import ADForm, CategoryChoice
 from django.utils import timezone
 from django.contrib.auth import login, logout
@@ -35,12 +35,15 @@ class FullListView(ListView):
 
 class CategoryListView(ListView):
     model = Category
-    template_name = 'templates/base.html'
+    template_name = 'ads/category_list.html'
     context_object_name = 'category_list'
 
     def get_queryset(self):
         category_list = CategoryChoice()
         return category_list
+
+
+#class
 
 
 # def ad_detail(request, ad_id):
