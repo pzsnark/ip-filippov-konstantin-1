@@ -18,6 +18,9 @@
 </div>
 <div align="center"><a href="{% url 'ads:full_list' %}">Полный список публикаций</a></div>
 <div align="center"><a href="{% url 'ads:ad_create' %}">Добавить объявление</a></div>
+  <form method=POST action="">
+      {{ category_list }}
+  </form>
 <div id="content">
     {% block content %}
     {% endblock %}

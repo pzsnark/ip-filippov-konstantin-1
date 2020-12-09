@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from .models import Ad, Category
 from django.views.generic import ListView, View, DetailView
 from django.template import loader
-from .forms import ADForm
+from .forms import ADForm, CategoryChoice
 from django.utils import timezone
 from django.contrib.auth import login, logout
 
@@ -31,6 +31,16 @@ class FullListView(ListView):
     def get_queryset(self):
         full_list = self.model.objects.all().order_by('-date_pub')
         return full_list
+
+
+class CategoryListView(ListView):
+    model = Category
+    template_name = 'templates/base.html'
+    context_object_name = 'category_list'
+
+    def get_queryset(self):
+        category_list = CategoryChoice()
+        return category_list
 
 
 # def ad_detail(request, ad_id):
