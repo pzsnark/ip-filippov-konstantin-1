@@ -1,12 +1,14 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
+from .validators import validate_birth_date
 
 # Create your models here.
 
+
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='user_profile')
-    birth_date = models.DateField(null=True, blank=True)
+    birth_date = models.DateField(null=True, blank=True, validators=[validate_birth_date])
     city = models.CharField(max_length=50, blank=True)
     about = models.TextField(max_length=150)
     avatar = models.ImageField(upload_to='users/avatars', default=None)
