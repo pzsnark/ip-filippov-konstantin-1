@@ -24,3 +24,8 @@ class CategoryChoice(forms.Form):
     categories = forms.ModelChoiceField(
         queryset=Category.objects.all()
      )
+    #
+    # class Meta:
+    #     model = Category
+    #     fields = ['name']
+    #     labels = {'name': 'Категория'}

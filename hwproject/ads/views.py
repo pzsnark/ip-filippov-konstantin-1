@@ -32,20 +32,6 @@ class FullListView(ListView):
         full_list = self.model.objects.all().order_by('-date_pub')
         return full_list
 
-
-class CategoryListView(ListView):
-    model = Category
-    template_name = 'ads/category_list.html'
-    context_object_name = 'category_list'
-
-    def get_queryset(self):
-        category_list = CategoryChoice()
-        return category_list
-
-
-#class
-
-
 # def ad_detail(request, ad_id):
 #     detail = get_object_or_404(Ad, id=ad_id)
 #     template = loader.get_template('ads/ad_detail.html')
@@ -132,3 +118,24 @@ def ad_remove(request, ad_id):
         else:
             return render(request, 'ads/ad_detail.html', context)
 
+
+def category_choice(request):
+    if request.method == 'GET':
+        form = CategoryChoice(request.GET)
+        if form.is_valid():
+            category = form.cleaned_data.get('categories')
+            return redirect('ads:category_view', category_id=category.id)
+
+
+class CategoryView(ListView):
+    model = Ad
+    template_name = 'ads/category_view.html'
+    context_object_name = 'category_view'
+    pk_url_kwarg = 'category_id'
+
+    def get(self, *args, **kwargs):
+        ad_list = get_object_or_404(Category, id=self.kwargs['category_id'])
+        # ad_list = self.model.objects.filter(Category=self.kwargs['category_id']).order_by('-date_pub')
+        # ad_list = get_object_or_404(Category, id=self.kwargs['category_id'])
+        print(ad_list)
+        return ad_list

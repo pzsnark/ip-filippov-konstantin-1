@@ -2,12 +2,12 @@
 {% block title %}Login{% endblock %}
 {% block content %}
 <!--    {% if not request.user.is_authenticated %}-->
-        <form action="{% url 'login' %}" method="post">
+        <form action="{% url 'account:login' %}" method="post">
             {{ form.as_p }}
             {% csrf_token %}
             <input type="hidden" name="next" value="{{ next }}"/>
             <p><input type="submit" value="Login"></p>
-            {{ login_result }}
         </form>
+        <a href="{% url 'account:password_reset' %}">Восстановить пароль</a>
 <!--    {% endif %}-->
 {% endblock %}
