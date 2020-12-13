@@ -1,7 +1,7 @@
 from django.conf.urls import url
 from django.urls import path, reverse_lazy
 from django.views.generic import TemplateView
-from .views import IndexView, FeedView, PostView, CretePostView, EditPostView, like_post, DeletePostView, ProfileView, AddRemoveFriend, EditProfileView
+from .views import IndexView, FeedView, PostView, CreatePostView, EditPostView, like_post, DeletePostView, ProfileView, AddRemoveFriend, EditProfileView
 from django.contrib.auth.views import (
     PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView, LogoutView
     )
@@ -12,7 +12,7 @@ app_name = 'core'
 urlpatterns = [
     url('^posts/$', IndexView.as_view(), name='index'),  # name не обязательно, но желательно
     path('posts/feed/', FeedView.as_view(), name='post-feed'),
-    path('posts/create/', CretePostView.as_view(), name='post-create'),
+    path('posts/create/', CreatePostView.as_view(), name='post-create'),
     url(r'^posts/(?P<post_id>[0-9]+)/$', PostView.as_view(), name='post-detail'),
     path('posts/<int:post_id>/edit/', EditPostView.as_view(), name='post-edit'),
     path('posts/<int:post_id>/delete/', DeletePostView.as_view(), name='post-delete'),

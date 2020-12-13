@@ -103,7 +103,7 @@ class FeedView(View):
             return render(request, self.template_name)
 
 
-class CretePostView(CreateView):
+class CreatePostView(CreateView):
     form_class = PostForm
     template_name = 'core/post_create.html'
 

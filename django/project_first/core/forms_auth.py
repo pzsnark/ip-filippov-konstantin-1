@@ -3,9 +3,9 @@ from django import forms
 
 
 class LoginForm(AuthenticationForm):
-    username = UsernameField(widget=forms.TextInput(attrs={
+    username = UsernameField(label='Имя пользователя', widget=forms.TextInput(attrs={
         'autofocus': True,
-        'placeholder': 'Username',
+        'placeholder': 'Имя пользователя',
         'class': 'form-control'
     }))
 
