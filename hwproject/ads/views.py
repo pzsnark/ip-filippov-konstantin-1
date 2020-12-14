@@ -83,7 +83,7 @@ class AdDelete(DeleteView):
 
     def get_success_url(self):
         ad_id = self.kwargs['ad_id']
-        return reverse('ads:ad_delete_success', args=(ad_id, ))
+        return reverse('ads:ad_delete_success')
 
 
 @login_required
