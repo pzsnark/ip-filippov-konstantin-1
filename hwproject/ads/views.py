@@ -32,6 +32,7 @@ class FullListView(ListView):
         full_list = self.model.objects.all().order_by('-date_pub')
         return full_list
 
+
 # def ad_detail(request, ad_id):
 #     detail = get_object_or_404(Ad, id=ad_id)
 #     template = loader.get_template('ads/ad_detail.html')
@@ -52,6 +53,7 @@ class AdDetail(DetailView):
         ad = self.get_object()
         context.update({'button_fav': "в избранном" if self.request.user in ad.favorite.all() else "добавить в избранное"})
         context.update({'button_rm': '' if self.request.user == ad.author else 'hidden'})
+        context.update({'category': ad.categories.all()})
         return context
 
 
@@ -134,8 +136,14 @@ class CategoryView(ListView):
     pk_url_kwarg = 'category_id'
 
     def get(self, *args, **kwargs):
-        ad_list = get_object_or_404(Category, id=self.kwargs['category_id'])
-        # ad_list = self.model.objects.filter(Category=self.kwargs['category_id']).order_by('-date_pub')
-        # ad_list = get_object_or_404(Category, id=self.kwargs['category_id'])
-        print(ad_list)
-        return ad_list
+        self.category = get_object_or_404(Category, id=self.kwargs['category_id'])
+        return super().get(self, *args, **kwargs)
+
+    def get_queryset(self):
+        return super(CategoryView, self).get_queryset().filter(categories=self.category).order_by('-date_pub')
+
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context.update({'category': self.category})
+    #     return context
+

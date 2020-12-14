@@ -12,5 +12,5 @@ urlpatterns = [
     path('<int:ad_id>/ad_remove/', ad_remove, name='ad_remove'),
     path('ad_create/', ad_create, name='ad_create'),
     path('category_list/', category_choice, name='category_list'),
-    path('category_list/?categories=<int:category_id>)', CategoryView.as_view(), name='category_view'),
+    path('category_list/<int:category_id>', CategoryView.as_view(), name='category_view'),
 ]

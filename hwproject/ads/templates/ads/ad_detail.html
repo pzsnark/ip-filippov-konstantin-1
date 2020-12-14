@@ -5,13 +5,14 @@
 <ul>
     <li>
         <p> {{ ad_detail.author }} </p>
-        <p> {% for category in ad_detail.category_set.all %}
-            Категория: {{ category.name }}
+        <p> {% for set in ad_detail.categories.all %}
+            {{ set }}
             {% endfor %}
         </p>
             <p> {{ ad_detail.date_pub }} </p>
-            {% if ad.photo %}
-            <p> <img alt="ad's image" src="{{ ad.photo.url }}" style="width: 10%; height: 10%;"></p>
+            {{ ad_detail.title }}
+            {% if ad_detail.photo %}
+            <p> <img alt="ad's image" src="{{ ad_detail.photo.url }}" style="width: 50%; height: 50%;"></p>
             {% else %}
             <p>Нет ни одной фотографии</p>
             {% endif %}

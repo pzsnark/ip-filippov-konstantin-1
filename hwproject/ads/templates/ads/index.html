@@ -6,8 +6,8 @@
     {% for ad in last_ad %}
     <li>
         <p> Автор: {{ ad.author }} </p>
-        <p> {% for category in ad.category_set.all %}
-            Категория: {{ category.name }}
+        <p> {% for set in ad.categories.all %}
+            {{ set }}
             {% endfor %}
         </p>
         <a href="{% url 'ads:ad_detail' ad.id %}">
