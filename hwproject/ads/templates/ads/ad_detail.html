@@ -17,13 +17,14 @@
             <p>Нет ни одной фотографии</p>
             {% endif %}
         <p> {{ ad_detail.description }} </p>
+        <a href="{% url 'ads:ad_edit' ad_id=ad_detail.id %}">Редактировать</a>
         <form method="POST" action="{% url 'ads:ad_favor' ad_id=ad_detail.id %}">
             {% csrf_token %}
             <button type="submit">{{ button_fav }}</button>
         </form>
-        <form method="POST" action="{% url 'ads:ad_remove' ad_id=ad_detail.id %}">
+        <form method="GET" action="{% url 'ads:ad_delete' ad_id=ad_detail.id %}">
             {% csrf_token %}
-        <button type="submit" {{ button_rm }}>удалить</button>
+        <button type="submit" {{ button_rm }}>Удалить</button>
             {{ context }}
         </form>
         <hr>

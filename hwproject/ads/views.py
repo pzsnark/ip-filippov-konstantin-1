@@ -1,8 +1,10 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
+from django.urls import reverse
+
 from .models import Ad, Category
-from django.views.generic import ListView, View, DetailView
+from django.views.generic import ListView, View, DetailView, UpdateView, DeleteView
 from django.template import loader, RequestContext
 from .forms import ADForm, CategoryChoice
 from django.utils import timezone
@@ -57,6 +59,33 @@ class AdDetail(DetailView):
         return context
 
 
+class AdEdit(UpdateView):
+    model = Ad
+    template_name = 'ads/ad_edit.html'
+    form_class = ADForm
+    pk_url_kwarg = 'ad_id'
+
+    def get_success_url(self):
+        ad_id = self.kwargs['ad_id']
+        return reverse('ads:ad_detail', args=(ad_id, ))
+
+    def get(self, request, ad_id):
+        self.object = self.get_object()
+        if self.object.author != request.user:
+            raise Http404()
+        return super().get(self, request, ad_id)
+
+
+class AdDelete(DeleteView):
+    model = Ad
+    template_name = 'ads/ad_delete.html'
+    pk_url_kwarg = 'ad_id'
+
+    def get_success_url(self):
+        ad_id = self.kwargs['ad_id']
+        return reverse('ads:ad_delete_success', args=(ad_id, ))
+
+
 @login_required
 def ad_favor(request, ad_id):
     ad = get_object_or_404(Ad, id=ad_id)
@@ -107,18 +136,18 @@ def ad_edit(request, ad_id):
     return render(request, 'ads/ad_edit.html', {'form': form})
 
 
-def ad_remove(request, ad_id):
-    ad = get_object_or_404(Ad, id=ad_id)
-    context = {'ad_remove_result': 'Невозможно удалить'}
-    if request.method == 'POST':
-        if request.user.is_staff == 1:
-            Ad.objects.filter(id=ad_id).delete()
-            return HttpResponse('Объявление удалено')
-        elif request.user == ad.author:
-            Ad.objects.filter(id=ad_id).delete()
-            return HttpResponse('Объявление удалено')
-        else:
-            return render(request, 'ads/ad_detail.html', context)
+# def ad_remove(request, ad_id):
+#     ad = get_object_or_404(Ad, id=ad_id)
+#     context = {'ad_remove_result': 'Невозможно удалить'}
+#     if request.method == 'POST':
+#         if request.user.is_staff == 1:
+#             Ad.objects.filter(id=ad_id).delete()
+#             return HttpResponse('Объявление удалено')
+#         elif request.user == ad.author:
+#             Ad.objects.filter(id=ad_id).delete()
+#             return HttpResponse('Объявление удалено')
+#         else:
+#             return render(request, 'ads/ad_detail.html', context)
 
 
 def category_choice(request):
