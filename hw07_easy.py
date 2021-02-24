@@ -28,7 +28,6 @@ class Triangle:
         self.a = len_size(cx, bx, cy, by)
         self.b = len_size(cx, ax, cy, ay)
         self.c = len_size(ax, bx, ay, by)
-        print(self.a, self.b, self.c)
 
         self.p = (self.a + self.b + self.c) / 2
         self.ha = (2 * sqrt(self.p * (self.p - self.a) * (self.p - self.b) * (self.p - self.c))) / self.a
@@ -41,7 +40,7 @@ class Triangle:
     def perimeter(self):
         print('Периметр треугольника: ', self.a + self.b + self.c)
 
-    def square(self):
+    def area(self):
         return abs(((self.ax - self.cx) * (self.by - self.cy)) - ((self.bx - self.cx) * (self.ay - self.cy))) / 2
 
     def square_geron(self):
@@ -75,6 +74,6 @@ n = Triangle(ax, ay, bx, by, cx, cy)
 # n.len_side()
 n.height()
 n.perimeter()
-print("Площадь треугольника по вершинам: ", n.square())
+print("Площадь треугольника по вершинам: ", n.area())
 print("Площадь треугольника по формуле Герона: ", n.square_geron())
 
