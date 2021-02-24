@@ -10,17 +10,26 @@
 from math import sqrt
 
 
+def len_size(a, b, c, d):
+    return sqrt(((b - a) ** 2) + ((d - c) ** 2))
+
+
 class Triangle:
-    def __init__(self, xa, ya, xb, yb, xc, yc):
-        self.xa = xa
-        self.ya = ya
-        self.xb = xb
-        self.yb = yb
-        self.xc = xc
-        self.yc = yc
-        self.c = sqrt(((xb - xa) ** 2) + ((yb - ya) ** 2))
-        self.b = sqrt(((xc - xa) ** 2) + ((yc - ya) ** 2))
-        self.a = sqrt(((xc - xb) ** 2) + ((yc - yb) ** 2))
+    def __init__(self, ax, ay, bx, by, cx, cy):
+        self.ax = ax
+        self.ay = ay
+
+        self.bx = bx
+        self.by = by
+
+        self.cx = cx
+        self.cy = cy
+
+        self.a = len_size(cx, bx, cy, by)
+        self.b = len_size(cx, ax, cy, ay)
+        self.c = len_size(ax, bx, ay, by)
+        print(self.a, self.b, self.c)
+
         self.p = (self.a + self.b + self.c) / 2
         self.ha = (2 * sqrt(self.p * (self.p - self.a) * (self.p - self.b) * (self.p - self.c))) / self.a
         self.hb = (2 * sqrt(self.p * (self.p - self.a) * (self.p - self.b) * (self.p - self.c))) / self.b
@@ -33,7 +42,7 @@ class Triangle:
         print('Периметр треугольника: ', self.a + self.b + self.c)
 
     def square(self):
-        return abs(((self.xa - self.xc) * (self.yb - self.yc)) - ((self.xb - self.xc) * (self.ya - self.yc))) / 2
+        return abs(((self.ax - self.cx) * (self.by - self.cy)) - ((self.bx - self.cx) * (self.ay - self.cy))) / 2
 
     def square_geron(self):
         return sqrt(self.p * (self.p - self.a) * (self.p - self.b) * (self.p - self.c))
@@ -44,19 +53,26 @@ class Triangle:
         print('Высота с точки C: ', self.hc)
 
 
-print('Введите координаты точки A')
-xa = float(input('x: '))
-ya = float(input('y: '))
-print('Введите координаты точки B')
-xb = float(input('x: '))
-yb = float(input('y: '))
-print('Введите координаты точки C')
-xc = float(input('x: '))
-yc = float(input('y: '))
+# print('Введите координаты точки A')
+# ax = float(input('x: '))
+# ay = float(input('y: '))
+# print('Введите координаты точки B')
+# bx = float(input('x: '))
+# by = float(input('y: '))
+# print('Введите координаты точки C')
+# cx = float(input('x: '))
+# cy = float(input('y: '))
 
-n = Triangle(xa, ya, xb, yb, xc, yc)
+ax = -4
+ay = 7
+bx = -1
+by = 2
+cx = -7
+cy = -4
 
-n.len_side()
+n = Triangle(ax, ay, bx, by, cx, cy)
+
+# n.len_side()
 n.height()
 n.perimeter()
 print("Площадь треугольника по вершинам: ", n.square())
