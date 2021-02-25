@@ -30,28 +30,27 @@ class Trap:
         self.da = len_size(dx, ax, dy, ay)
         self.ac = len_size(cx, ax, cy, ay)
         self.bd = len_size(dx, bx, dy, by)
-        # print(self.ab, self.bc, self.cd, self.da, self.ac, self.bd)
 
-        if self.check():
+        if self.is_isosceles:
             print('Фигура является трапецией')
         else:
             print('Фигура не является трапецией')
 
-        # фигура является равнобедренной трапецией если диагонали равны
-    def check(self):
+    @property
+    def is_isosceles(self):
         if self.ac == self.bd:
             return True
         else:
             return False
 
     def perimeter(self):
-        if Trap.check(self):
+        if self.is_isosceles:
             print('Периметр трапеции: ', self.ab + self.bc + self.cd + self.da)
         else:
             print('Это не трапеция')
 
     def area(self):
-        if Trap.check(self):
+        if self.is_isosceles:
             print('Площадь трапеции: ', (self.ab + self.cd / 4) * sqrt(4 * (self.bc ** 2) - ((self.ab - self.cd) ** 2)))
         else:
             print('Это не трапеция')

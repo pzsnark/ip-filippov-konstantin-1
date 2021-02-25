@@ -30,26 +30,30 @@ class Triangle:
         self.c = len_size(ax, bx, ay, by)
 
         self.p = (self.a + self.b + self.c) / 2
-        self.ha = (2 * sqrt(self.p * (self.p - self.a) * (self.p - self.b) * (self.p - self.c))) / self.a
-        self.hb = (2 * sqrt(self.p * (self.p - self.a) * (self.p - self.b) * (self.p - self.c))) / self.b
-        self.hc = (2 * sqrt(self.p * (self.p - self.a) * (self.p - self.b) * (self.p - self.c))) / self.c
 
+        self.ha = (2 * self.area_geron) / self.a
+        self.hb = (2 * self.area_geron) / self.b
+        self.hc = (2 * self.area_geron) / self.c
+
+    @property
     def len_side(self):
-        print('Длины сторон треугольника: ', self.a, self.b, self.c)
+        return self.a, self.b, self.c
 
+    @property
     def perimeter(self):
-        print('Периметр треугольника: ', self.a + self.b + self.c)
+        return self.a + self.b + self.c
 
+    @property
     def area(self):
         return abs(((self.ax - self.cx) * (self.by - self.cy)) - ((self.bx - self.cx) * (self.ay - self.cy))) / 2
 
-    def square_geron(self):
+    @property
+    def area_geron(self):
         return sqrt(self.p * (self.p - self.a) * (self.p - self.b) * (self.p - self.c))
 
+    @property
     def height(self):
-        print('Высота с точки А: ', self.ha)
-        print('Высота с точки B: ', self.hb)
-        print('Высота с точки C: ', self.hc)
+        return self.ha, self.hb, self.hc
 
 
 class Trap:
@@ -72,60 +76,45 @@ class Trap:
         self.da = len_size(dx, ax, dy, ay)
         self.ac = len_size(cx, ax, cy, ay)
         self.bd = len_size(dx, bx, dy, by)
-        # print(self.ab, self.bc, self.cd, self.da, self.ac, self.bd)
 
-        if self.check():
+        if self.is_isosceles:
             print('Фигура является трапецией')
         else:
             print('Фигура не является трапецией')
 
-        # фигура является равнобедренной трапецией если диагонали равны
-    def check(self):
+    @property
+    def is_isosceles(self):
         if self.ac == self.bd:
             return True
         else:
             return False
 
+    @property
     def perimeter(self):
-        if Trap.check(self):
-            print('Периметр трапеции: ', self.ab + self.bc + self.cd + self.da)
+        if self.is_isosceles:
+            return self.ab + self.bc + self.cd + self.da
         else:
             print('Это не трапеция')
 
+    @property
     def area(self):
-        if Trap.check(self):
-            print('Площадь трапеции: ', (self.ab + self.cd / 4) * sqrt(4 * (self.bc ** 2) - ((self.ab - self.cd) ** 2)))
+        if self.is_isosceles:
+            return (self.ab + self.cd / 4) * sqrt(4 * (self.bc ** 2) - ((self.ab - self.cd) ** 2))
         else:
             print('Это не трапеция')
 
 
-ax = 1
-ay = 1
-bx = 2
-by = 6
-cx = 7
-cy = 6
-dx = 8
-dy = 1
+# выполняем
 
-n = Trap(ax, ay, bx, by, cx, cy, dx, dy)
+example_tri = Triangle(-4, 7, -1, 2, -7, -4)
+example_trap = Trap(1, 1, 2, 6, 7, 6, 8, 1)
 
-n.check()
-n.perimeter()
-n.area()
 
-ax = -4
-ay = 7
-bx = -1
-by = 2
-cx = -7
-cy = -4
+print("Высоты треугольника: ", example_tri.height)
+print("Периметр треугольника: ", example_tri.perimeter)
+print("Площадь треугольника по вершинам: ", example_tri.area)
+print("Площадь треугольника по формуле Герона: ", example_tri.area_geron)
 
-n = Triangle(ax, ay, bx, by, cx, cy)
-
-# n.len_side()
-n.height()
-n.perimeter()
-print("Площадь треугольника по вершинам: ", n.area())
-print("Площадь треугольника по формуле Герона: ", n.square_geron())
-
+print("Это трапеция? ", example_trap.is_isosceles)
+print("Периметр трапеции: ", example_trap.perimeter)
+print("Площадь трапеции", example_trap.area)
