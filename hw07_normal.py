@@ -20,7 +20,8 @@
 class Classes:
     """Класс описывающий школьные классы"""
 
-    student_list = []
+    students_list = []
+    teachers_list = []
 
     def __init__(self, number='undefined', index='undefined'):
         self.__number = number
@@ -28,18 +29,19 @@ class Classes:
 
     @property
     def get_name(self):
-        print(f'Класс: {self.__number + self.__index}')
         return self.__number + self.__index
 
     def set_name(self, value):
         self.__number = value
 
     def add_student(self, student):
-        self.student_list.append(student)
-        student = student.get_object()
+        self.students_list.append(student)
 
-    def get_student_list(self):
-        return Classes.student_list
+    def add_teacher(self, teacher):
+        self.teachers_list.append(teacher)
+
+    def get_students_list(self):
+        return self.students_list
 
 
 class Human:
@@ -53,27 +55,33 @@ class Human:
         self.__mother = mother
 
     def get_object(self):
-        return self.get_surname, self.get_name, self.get_patronymic, self.get_father, self.get_mother
+        return self.surname, self.name, self.patronymic, self.father, self.mother
 
     @property
-    def get_surname(self):
+    def surname(self):
         return self.__surname
 
     @property
-    def get_name(self):
+    def name(self):
         return self.__name
 
     @property
-    def get_patronymic(self):
+    def patronymic(self):
         return self.__patronymic
 
     @property
-    def get_father(self):
+    def father(self):
         return self.__father
 
+    def set_father(self, father):
+        self.__father = father
+
     @property
-    def get_mother(self):
+    def mother(self):
         return self.__mother
+
+    def set_mother(self, mother):
+        self.__mother = mother
 
 
 class Parent(Human):
@@ -86,8 +94,8 @@ class Parent(Human):
 class Student(Human):
     """Класс описывающий учащихся школы"""
 
-    def __init__(self, surname, name, patronymic, father=None, mother=None):
-        super().__init__(surname, name, patronymic, father, mother)
+    def __init__(self, *args):
+        super().__init__(*args)
 
 
 class Teacher(Human):
@@ -100,7 +108,7 @@ class Teacher(Human):
             self.school_subjects.append(school_object)
 
     def get_object(self):
-        return self.get_surname, self.get_name, self.get_patronymic, self.school_subjects
+        return self.surname, self.name, self.patronymic, self.school_subjects
 
 
 class SchoolSubject:
@@ -119,9 +127,15 @@ class SchoolSubject:
 
 class1 = Classes('4', 'A')
 
+parent1 = Parent('Иванов', 'Иван', 'Васильевич')
+parent2 = Parent('Иванова', 'Светлана', 'Анатольевна')
+
 student1 = Student('Иванов', 'Иван', 'Иванович')
 student2 = Student('Петров', 'Петр', 'Петрович')
 teacher1 = Teacher('Тарханов', 'Архип', 'Евграфьевич')
+
+student2.set_father(parent1)
+student2.set_mother(parent2)
 
 subj1 = SchoolSubject('Русский язык')
 subj2 = SchoolSubject('Математика')
@@ -129,6 +143,7 @@ subj3 = SchoolSubject('История')
 
 class1.add_student(student1)
 class1.add_student(student2)
+class1.add_teacher(teacher1)
 
 teacher1.add_school_objects(subj1)
 teacher1.add_school_objects(subj2)
@@ -142,4 +157,6 @@ teacher1.get_object()
 #     print(f"Предмет #{m}: {i.get_name}")
 #     m += m
 
-class1.get_student_list()
+class1.get_students_list()
+print(student1.get_object())
+print(student2.get_object())
