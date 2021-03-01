@@ -17,31 +17,60 @@
 # 5. Получить список всех Учителей, преподающих в указанном классе
 
 
+class School:
+    """Класс описывающий школы"""
+
+    def __init__(self, number):
+        self.__classes_list = []
+        self.__number = number
+
+    def __str__(self):
+        return self.__number
+
+    @property
+    def name(self):
+        return self.__number
+
+    def add_classes(self, class_):
+        self.__classes_list.append(class_)
+        class_.set_school(self)
+
+    def get_classes(self):
+        return self.__classes_list
+
+
 class Classes:
     """Класс описывающий школьные классы"""
-
-    students_list = []
-    teachers_list = []
 
     def __init__(self, number='undefined', index='undefined'):
         self.__number = number
         self.__index = index
+        self.__school = 'undefined'
+        self.__students_list = []
+        self.__teachers_list = []
+
+    def __str__(self):
+        return self.name
 
     @property
-    def get_name(self):
+    def name(self):
         return self.__number + self.__index
 
-    def set_name(self, value):
-        self.__number = value
+    def set_school(self, school):
+        self.__school = school
 
     def add_student(self, student):
-        self.students_list.append(student)
+        self.__students_list.append(student)
+        student.set_class(self)
 
     def add_teacher(self, teacher):
-        self.teachers_list.append(teacher)
+        self.__teachers_list.append(teacher)
 
     def get_students_list(self):
-        return self.students_list
+        return self.__students_list
+
+    def get_teachers_list(self):
+        return self.__teachers_list
 
 
 class Human:
@@ -97,18 +126,34 @@ class Student(Human):
     def __init__(self, *args):
         super().__init__(*args)
 
+        self.__class_ = None
+
+    @property
+    def class_(self):
+        return self.__class_
+
+    def set_class(self, class_):
+        self.__class_ = class_
+
 
 class Teacher(Human):
     """Класс описывающий переподавателей школы"""
 
-    school_subjects = []
+    def __init__(self, *args):
+        super().__init__(*args)
 
-    def add_school_objects(self, *args):
-        for school_object in args:
-            self.school_subjects.append(school_object)
+        self.__school_subject = 'undefined'
 
-    def get_object(self):
-        return self.surname, self.name, self.patronymic, self.school_subjects
+    @property
+    def school_subject(self):
+        return self.__school_subject
+
+    def set_school_subject(self, school_subject):
+        self.__school_subject = school_subject
+
+    @property
+    def school_subject(self):
+        return self.__school_subject
 
 
 class SchoolSubject:
@@ -117,8 +162,11 @@ class SchoolSubject:
     def __init__(self, name):
         self.__name = name
 
+    def __str__(self):
+        return self.__name
+
     @property
-    def get_name(self):
+    def name(self):
         return self.__name
 
     def set_name(self, value):
@@ -126,13 +174,18 @@ class SchoolSubject:
 
 
 class1 = Classes('4', 'A')
+class2 = Classes('4', 'Б')
 
 parent1 = Parent('Иванов', 'Иван', 'Васильевич')
 parent2 = Parent('Иванова', 'Светлана', 'Анатольевна')
 
 student1 = Student('Иванов', 'Иван', 'Иванович')
 student2 = Student('Петров', 'Петр', 'Петрович')
+student3 = Student('Сидоров', 'Сидор', 'Сидорович')
+
 teacher1 = Teacher('Тарханов', 'Архип', 'Евграфьевич')
+teacher2 = Teacher('Морозова', 'Мария', 'Ивановна')
+teacher3 = Teacher('Разумовский', 'Аристарх', 'Аполлинарьевич')
 
 student2.set_father(parent1)
 student2.set_mother(parent2)
@@ -143,11 +196,32 @@ subj3 = SchoolSubject('История')
 
 class1.add_student(student1)
 class1.add_student(student2)
-class1.add_teacher(teacher1)
+class2.add_student(student3)
 
-teacher1.add_school_objects(subj1)
-teacher1.add_school_objects(subj2)
-teacher1.get_object()
+class1.add_teacher(teacher1)
+class1.add_teacher(teacher2)
+class1.add_teacher(teacher3)
+class2.add_teacher(teacher1)
+class2.add_teacher(teacher3)
+
+teacher1.set_school_subject(subj1)
+teacher2.set_school_subject(subj2)
+teacher3.set_school_subject(subj3)
+
+school1 = School('6')
+school1.add_classes(class1)
+school1.get_classes()
+
+# вывод предметов ученика:
+# for teacher in student2.class_.get_teachers_list():
+#     print(teacher.school_subject.name)
+
+# вывод список учеников
+print(f'Список учеников {class1} класса:')
+for student in class1.get_students_list():
+    print(f'{student.surname} {student.name[0]}. {student.patronymic[0]}.')
+
+
 # n = teacher1.get_object()
 # print(f'Фамилия: {n[0]}')
 # print(f'Имя: {n[1]}')
@@ -157,6 +231,3 @@ teacher1.get_object()
 #     print(f"Предмет #{m}: {i.get_name}")
 #     m += m
 
-class1.get_students_list()
-print(student1.get_object())
-print(student2.get_object())
