@@ -42,10 +42,10 @@ class School:
 class Classes:
     """Класс описывающий школьные классы"""
 
-    def __init__(self, number='undefined', index='undefined'):
+    def __init__(self, number=None, index=None):
         self.__number = number
         self.__index = index
-        self.__school = 'undefined'
+        self.__school = None
         self.__students_list = []
         self.__teachers_list = []
 
@@ -142,7 +142,7 @@ class Teacher(Human):
     def __init__(self, *args):
         super().__init__(*args)
 
-        self.__school_subject = 'undefined'
+        self.__school_subject = None
 
     @property
     def school_subject(self):
