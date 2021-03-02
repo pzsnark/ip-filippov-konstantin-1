@@ -12,7 +12,7 @@
 # каждый работник получал строку из файла
 
 
-def create_worker(path):
+def create_workers_from_file(path):
     with open(path, mode='r', encoding='utf-8') as f:
         worker_list = []
         for line in f:
@@ -47,5 +47,5 @@ class Worker:
 # worker1 = create_worker('./hw7_hard/data/workers')[1]
 # print(worker)
 
-worker1 = Worker.add_worker('self', 2)
-print(worker1)
+create_workers_from_file('./hw7_hard/data/workers')
+
