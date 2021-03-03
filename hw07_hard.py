@@ -10,60 +10,63 @@
 # С использованием классов.
 # Реализуйте классы сотрудников так, чтобы на вход функции-конструктора
 # каждый работник получал строку из файла
+from operator import itemgetter
+PATH_WORKER = './hw7_hard/data/workers'
+PATH_CLOCK = './hw7_hard/data/hours_of'
 
 
-def create_workers_from_file(path):
+def set_clock(path):
+    with open(path, mode='r', encoding='utf-8') as f:
+        lines = f.readlines()
+        clock_list = []
+        del lines[0]
+        lines.sort(key=itemgetter(1 + 2))
+        for line in lines:
+            clock_list.append(line.split()[2])
+        return clock_list
+
+
+def paylist(path):
     with open(path, mode='r', encoding='utf-8') as f:
         worker_list = []
-        for line in f:
-            worker_list.append(Worker(*line.split()))
+        lines = f.readlines()
+        del lines[0]
+        lines.sort(key=itemgetter(1 + 2))
+        n = 0
+        for line in lines:
+            line = line.split()
+            line.append(set_clock(PATH_CLOCK)[n])
+            worker_list.append(Worker(*line))
+            n += 1
         return worker_list
 
 
 class Worker:
 
-    def __init__(self, name, surname, salary, position, clock_rate):
+    def __init__(self, name, surname, salary, position, clock_rate, clock_fact):
         self.__name = name
         self.__surname = surname
         self.__salary = int(salary)
         self.__position = position
         self.__clock_rate = int(clock_rate)
-        self.__path = './hw7_hard/data/workers'
-        self.__clock_fact = None
-        self.__pay = None
+        self.__clock_fact = int(clock_fact)
 
     def info(self):
-        return self.__name, self.__surname, self.__salary, self.__position, self.__clock_rate
+        return self.__name, self.__surname, self.__salary, self.__position, self.__clock_rate, self.__clock_fact
 
     @property
-    def clock_fact(self):
-        return self.__clock_fact
-
-    def set_clock_fact(self):
-        if self.__clock_fact is None:
-            print('Значение не установлено')
-            self.__clock_fact = input('Введите новое значение: ')
-        else:
-            print(f'Текущее значение: {self.__clock_fact}')
-            self.__clock_fact = input('Введите новое значение: ')
-
-    def payroll(self):
+    def pay(self):
         pay_per_clock = self.__salary / self.__clock_rate
         if self.__clock_fact == self.__clock_rate:
-            self.__pay = self.__salary
+            return self.__salary
         elif self.__clock_fact < self.__clock_rate:
-            self.__pay = self.__salary - (self.__clock_fact * pay_per_clock)
+            return self.__salary - ((self.__clock_rate - self.__clock_fact) * pay_per_clock)
         else:
-            self.__pay = self.__salary + (self.__clock_fact * (pay_per_clock * 2))
+            return self.__salary + ((self.__clock_fact - self.__clock_rate) * (pay_per_clock * 2))
 
 
-# for worker in create_workers_from_file('./hw7_hard/data/workers')[1:]:
-#     print(worker.info())
-#
-# worker1 = create_workers_from_file('./hw7_hard/data/workers')[1]
-# print(worker1)
-
-
-workers = create_workers_from_file('./hw7_hard/data/workers')
-workers[1].set_clock_fact()
-print(workers[1].clock_fact)
+m = 1
+for worker in paylist(PATH_WORKER):
+    print(worker.info())
+    print(round(worker.pay, 2))
+    m += 1
