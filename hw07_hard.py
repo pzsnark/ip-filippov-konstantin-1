@@ -65,8 +65,6 @@ class Worker:
             return self.__salary + ((self.__clock_fact - self.__clock_rate) * (pay_per_clock * 2))
 
 
-m = 1
 for worker in paylist(PATH_WORKER):
     print(worker.info())
     print(round(worker.pay, 2))
-    m += 1
