@@ -67,4 +67,8 @@ class Worker:
 
 for worker in paylist(PATH_WORKER):
     print(worker.info())
+<<<<<<< HEAD
     print(round(worker.pay, 2))
+=======
+    print(round(worker.pay, 2))
+>>>>>>> b029f0f05f6bcb7181a2e4d03c6dd352aa6f805f
