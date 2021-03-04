@@ -16,5 +16,7 @@ card = [['  '] * 9] * 3
 for n in card[0]:
     pass
 
+print('--------------------------')
 for element in card:
     print(element)
+print('--------------------------')
